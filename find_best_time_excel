@@ -1,4 +1,3 @@
-% 
 function time_slot = find_best_time_excel(name_of_class, times) 
     majors = ["Econ", "Business"];
    % majors = xlsread('class_info.xlsx','student','A1:C1'); 
@@ -8,25 +7,8 @@ function time_slot = find_best_time_excel(name_of_class, times)
     time_slot_conflicts = zeros(1, length(possible_times));
     
    
-    common_courses = repmat(" ", [3 100]);
-    %rows = ['K2:K37', 'K38:K46'];
+    common_courses = courses_for_majors();
     
-    [num , text] = xlsread('CCC.xlsx', 'K2:K37');
-    text = string(text);
-    text = text.'; %transpose
-    for jj = 1:length(text)
-       common_courses(1,jj) = text(jj);
-    end
-    
-    [num , text] = xlsread('CCC.xlsx', 'K38:K46');
-    text = string(text);
-    text = text.'; %transpose
-    for jj = 1:length(text)
-       common_courses(2,jj) = text(jj);
-    end
-    
-    
-   
    
    
    %["Econ 103", "Econ 104", "";
