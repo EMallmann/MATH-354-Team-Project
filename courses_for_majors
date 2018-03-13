@@ -1,0 +1,14 @@
+function common_courses = courses_for_majors()
+rows = ["K2:K37", "K38:K46"];
+
+
+for ii = 1: length(rows)
+    
+    [num , text] = xlsread('CCC.xlsx', rows(ii));
+    text = string(text);
+    text = text.'; %transpose
+    for jj = 1:length(text)
+        common_courses(ii,jj) = text(jj);
+    end
+end
+end
