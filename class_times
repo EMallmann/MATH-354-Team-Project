@@ -1,0 +1,60 @@
+function time_slots = class_times(isM, isT, isW, isR, isF, times)
+    [num,start_times] = xlsread('CSCD.xlsx', "K2:K2177"); 
+    start_times = string(start_times);
+    start_times = start_times.';
+    indeces = zeros(1, 200);
+    open_classes = zeros(1,200);
+    classes = strings(1,200);
+    index = 1;
+    [num,days_of_week] = xlsread('CSCD.xlsx', "I2:I2177");
+    days_of_week = string(days_of_week);
+    days_of_week.';
+    [num, class_name] = xlsread('CSCD.xlsx', "B2:B2177");
+    class_name = string(class_name);
+    class_name = class_name.';
+    for ii= 1:length(start_times)
+        if strcmp(start_times(ii),times(1))
+            indeces(1,index) = ii;
+            index = index+ 1;
+        end
+    end
+    index = 1;
+    isDay = false;
+    %display(isF);
+    for ii = 1: length(indeces)
+        if indeces(ii) > 0
+            %display(days_of_week(indeces(ii)));
+            %display(strfind(days_of_week(indeces(ii)), isF));
+            if strfind(days_of_week(indeces(ii)), isM) > 0 
+                isDay = true;
+            end
+           
+            if strfind(days_of_week(indeces(ii)), isT) > 0
+                isDay = true;
+            end
+            
+            if strfind(days_of_week(indeces(ii)), isW) > 0
+                isDay = true;
+            end
+            
+            if strfind(days_of_week(indeces(ii)), isR) > 0 
+                isDay = true;
+            end
+            
+            if strfind(days_of_week(indeces(ii)), isF) > 0 
+                isDay = true;
+            end
+                %end of condition
+            if (isDay)
+                classes(index) = class_name(indeces(ii));
+                index = index + 1;
+                isDay = false;
+            end
+            
+            end
+        end
+   
+    
+    display(classes);
+    
+end
