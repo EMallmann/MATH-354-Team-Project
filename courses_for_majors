@@ -1,4 +1,4 @@
-function [common_courses,uniqueplans] = courses_for_majors()
+function uniqueplans = courses_for_majors()
 % rows = ["K2:K37", "K38:K46"];
 
 
@@ -6,55 +6,59 @@ function [common_courses,uniqueplans] = courses_for_majors()
 [num,text] = xlsread('CCC.xlsx', "B2:B32661");
 text = string(text);
 uniqueplans = unique(text);
-% display(uniqueplans);
-%length(uniqueplans)
-isFirst = true;
-class_index = zeros(1,220);
-length(class_index)
-%display(class_index)
-index = 1;
-for ii = 1:length(text)-1
-    isFirst = true;
-    if strcmp(text(ii),text(ii+1))
-    isFirst =false;
-    end
-    for jj = 1:length(uniqueplans)
-        if isFirst && strcmp(text(ii),uniqueplans(jj))
-            
-            class_index(1,index) = ii+1;
-            index = index + 1;
-        end
-    end
-end
-class_index(length(uniqueplans)) = length(text) + 1;
-%display(class_index);
-
-rows_of_file = strings(1,220); %220 is length of uniqueplans
-rows_of_file(1) = 'K2:K37'; %needs to be hard coded
-for kk = 1:10 %change to 220, at 10 for run time testing purposes
- x = strcat('K', num2str(class_index(kk)+1), ':');
- y = (strcat('K', num2str(class_index(kk+1))));
- rows_of_file(1,kk+1) = strcat(x,y);
- 
-    [num , text] = xlsread('CCC.xlsx', rows_of_file(1,kk));
-    text = unique(text);
-    text = string(text);
-    text = text.'; %transpose
-    if (length(text) < 250)
-        text = horzcat(text, strings(1,250-length(text)));
-    end
-    if kk ==1
-        common_courses = text;
-    else
-        common_courses = [common_courses; text];
-    end
-%     for jj = 1:length(text)
-%         common_courses(kk,jj) = text(jj);
+% 
+% % display(uniqueplans);
+% %length(uniqueplans)
+% isFirst = true;
+% class_index = zeros(1,220);
+% length(class_index);
+% %display(class_index)
+% index = 1;
+% for ii = 1:length(text)-1
+%     isFirst = true;
+%     if strcmp(text(ii),text(ii+1))
+%     isFirst =false;
 %     end
-end
-%display(rows_of_file);
-
-
+%     for jj = 1:length(uniqueplans)
+%         if isFirst && strcmp(text(ii),uniqueplans(jj))
+%             
+%             class_index(1,index) = ii+1;
+%             index = index + 1;
+%         end
+%     end
+% end
+% class_index(length(uniqueplans)) = length(text) + 1;
+% %display(class_index);
+% 
+% rows_of_file = strings(1,220); %220 is length of uniqueplans
+% rows_of_file(1) = 'K2:K37'; %needs to be hard coded
+% rows_of_file(220) = 'K32416:K32642';
+% for kk = 1:220 
+%  x = strcat('K', num2str(class_index(kk)+1), ':');
+%  if kk<220
+%     y = (strcat('K', num2str(class_index(kk+1))));
+%  end
+%  rows_of_file(1,kk+1) = strcat(x,y);
+%  
+%     [num , text] = xlsread('CCC.xlsx', rows_of_file(1,kk));
+%     text = unique(text);
+%     text = string(text);
+%     text = text.'; %transpose
+%     if (length(text) < 250)
+%         text = horzcat(text, strings(1,250-length(text)));
+%     end
+%     if kk ==1
+%         common_courses = text;
+%     else
+%         common_courses = [common_courses; text];
+%     end
+% %     for jj = 1:length(text)
+% %         common_courses(kk,jj) = text(jj);
+% %     end
+% end
+% %display(rows_of_file);
+% 
+% save('CCC_organized.mat', 'common_courses');
 end
 
 
