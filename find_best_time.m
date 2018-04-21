@@ -8,13 +8,13 @@
 function time_slot = find_best_time(isM, isT,isW,isR,isF,times,name_of_class) 
     
      majors = courses_for_majors();
-     majors = majors(218:219, :); %truncates to first two rows
+     %majors = majors(218:219, :); %truncates to first two rows
      load('CCC_organized.mat', 'common_courses');
      majors_required_classes = common_courses;
-     majors_required_classes = majors_required_classes(218:219, 1:10)%truncates to first two rows
+     %majors_required_classes = majors_required_classes(218:219,: );
      
      
-    num_majors = 100*ones(1,length(majors)); %corresponds to majors vector; 10 econ majors, 20 business majors, etc. %do not have data, 10 used as placeholder
+    num_majors = 13*ones(1,length(majors)); %corresponds to majors vector; 10 econ majors, 20 business majors, etc. %do not have data, 10 used as placeholder
     possible_times = times;
     time_slot_students = zeros(1, length(possible_times)); %creates vector of zeros representing available students at each time slot
     
