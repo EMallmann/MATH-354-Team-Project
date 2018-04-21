@@ -26,7 +26,9 @@ function [time_slots,open_seats] = class_times(isM, isT, isW, isR, isF, times)
         seats = zeros(1,250);
         indeces = zeros(1, 250);
         for ii = 1:length(start_times)
-            if strcmp(start_times(ii),times(jj))
+            st= strtok(start_times(ii), ':');
+            t = strtok(times(jj), ':');
+            if st == t
                 indeces(1,index) = ii;
                 index = index+ 1;
             end
