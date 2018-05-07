@@ -6,7 +6,16 @@ function uniqueplans = courses_for_majors()
 [num,text] = xlsread('CCC.xlsx', "B2:B32661");
 text = string(text);
 uniqueplans = unique(text);
-% 
+
+
+% The code below is used to create the matrix of commonly taken courses for each major.
+% It has a 5 minute run-time, and creates the same matrix every time, so we saved the matrix
+% in a .mat file and commented out the code used to create it.
+
+
+
+
+
 % % display(uniqueplans);
 % %length(uniqueplans)
 % isFirst = true;
