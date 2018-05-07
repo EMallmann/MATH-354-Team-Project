@@ -1,21 +1,32 @@
 function [time_slots,open_seats] = class_times(isM, isT, isW, isR, isF, times)
-    [num,start_times] = xlsread('CSCD.xlsx', "K2:K2177");
-    start_times = string(start_times);
-    start_times = start_times.';
+
+    % reads start time of each class offered and converts to a row vector of strings
+    [num,start_times] = xlsread('CSCD.xlsx', "K2:K2177"); %reads the start times for each class (found in column K), stored as text
+    start_times = string(start_times); %convert start_times to strings
+    start_times = start_times.'; %transpose vector
    
     %open_classes = zeros(1,100);
+    % Initialize vectors and index
     time_slots = strings(1,250);
     open_seats = zeros(1,250);
     index = 1;
+    
+    % reads days of the week each class is offered and converts to a row vector of strings
     [num,days_of_week] = xlsread('CSCD.xlsx', "I2:I2177");
     days_of_week = string(days_of_week);
     days_of_week.';
+    
+    % reads name of each class offered and converts to a row vector of strings
     [num, class_name] = xlsread('CSCD.xlsx', "B2:B2177");
     class_name = string(class_name);
     class_name = class_name.';
+    
+    % reads number of students enrolled in each class offered and converts to a row vector of strings
     [num] = xlsread('CSCD.xlsx', "V2:V2177");
     enrolled = num;
     enrolled = enrolled.';
+    
+    % reads the course capacity and converts to a row vector of strings
     [num] = xlsread('CSCD.xlsx', "W2:W2177");
     cap = num;
     cap = cap.';
@@ -40,6 +51,8 @@ function [time_slots,open_seats] = class_times(isM, isT, isW, isR, isF, times)
             if indeces(ii) > 0
                 %display(days_of_week(indeces(ii)));
                 %display(strfind(days_of_week(indeces(ii)), isF));
+                
+                %Determine what day of the week courses are offered
                 if strfind(days_of_week(indeces(ii)), isM) > 0
                     isDay = true;
                 end
