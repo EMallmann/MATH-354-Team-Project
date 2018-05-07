@@ -8,7 +8,7 @@
 function time_slot = find_best_time(isM, isT,isW,isR,isF,times,name_of_class) 
     
      majors = courses_for_majors();
-     %majors = majors(218:219, :); %truncates to first two rows
+     %majors = majors(218:219, :); 
      load('CCC_organized.mat', 'common_courses');
      majors_required_classes = common_courses;
      %majors_required_classes = majors_required_classes(218:219,: );
@@ -31,7 +31,7 @@ function time_slot = find_best_time(isM, isT,isW,isR,isF,times,name_of_class)
      for ii = 1:length(open_classes(:,1)) %for each time slot
           for jj = 1:length(majors) %for each major
                 [conflicts, open_seats(ii, :), num_majors(jj)] = consider_open_seats(open_seats(ii, :), open_classes(ii, :), majors_required_classes(jj, :), num_majors(jj));
-                if num_majors(jj) - conflicts > 0
+                if num_majors(jj) - conflicts > 0 && length(intersect(majors_required_classes(jj,:),name_of_class)) > 0
                     total_students = total_students + (num_majors(jj) -conflicts);
                 end
           end %ends for loop for each major
