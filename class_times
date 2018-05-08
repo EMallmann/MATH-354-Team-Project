@@ -1,11 +1,15 @@
 function [time_slots,open_seats] = class_times(isM, isT, isW, isR, isF, times)
+    % open_seats = number of open seat for each class conflicting with the proposed class
+    % time_slots = course name of each class conflicting with the proposed class
+    % This function determines the number of open seats available at a user-specified time slot (read in from the vector times) 
+    % The classes returned in the time_slots vector must conflict with at least one proposed class day 
+    % (e.g. a friday only class WOULD still conflict with a proposed Monday-Wednesday-Friday class
 
     % reads start time of each class offered and converts to a row vector of strings
     [num,start_times] = xlsread('CSCD.xlsx', "K2:K2177"); %reads the start times for each class (found in column K), stored as text
     start_times = string(start_times); %convert start_times to strings
     start_times = start_times.'; %transpose vector
    
-    %open_classes = zeros(1,100);
     % Initialize vectors and index
     time_slots = strings(1,250);
     open_seats = zeros(1,250);
@@ -31,7 +35,7 @@ function [time_slots,open_seats] = class_times(isM, isT, isW, isR, isF, times)
     cap = num;
     cap = cap.';
    
-    
+    % find course conflicts for each proposed time (stored in the input vector times)
     for jj = 1:length(times)
         classes = strings(1,250);
         seats = zeros(1,250);
@@ -39,20 +43,22 @@ function [time_slots,open_seats] = class_times(isM, isT, isW, isR, isF, times)
         for ii = 1:length(start_times)
             st= strtok(start_times(ii), ':');
             t = strtok(times(jj), ':');
-            if st == t
+            
+            % Compare start time of proposed class with start time of classes in CSCD
+            if st == t 
                 indeces(1,index) = ii;
                 index = index+ 1;
             end
         end
         index = 1;
         isDay = false;
-        %display(isF);
+        
+        % find day conflicts 
         for ii = 1: length(indeces)
             if indeces(ii) > 0
-                %display(days_of_week(indeces(ii)));
-                %display(strfind(days_of_week(indeces(ii)), isF));
                 
-                %Determine what day of the week courses are offered
+                % Determine what day of the week courses are offered
+                % IF a class is offered on that day of the week THEN isDay (a boolean) is set high
                 if strfind(days_of_week(indeces(ii)), isM) > 0
                     isDay = true;
                 end
@@ -72,22 +78,25 @@ function [time_slots,open_seats] = class_times(isM, isT, isW, isR, isF, times)
                 if strfind(days_of_week(indeces(ii)), isF) > 0
                     isDay = true;
                 end
-                %end of condition
+                % end of condition to determine day of week conflict
                 if (isDay)
                     classes(index) = class_name(indeces(ii));
-                  
                     seats(index) = cap(indeces(ii)) - enrolled(indeces(ii));
                     index = index + 1;
                     isDay = false;
-                end
+                end % end IF isDay = true
 
-            end
-        end
+            end % end IF indices > 0
+        end % end find day conflicts
+        
+        % Append filled vectors "classes" and "seats" to pre-allocated vectors "time_slots" and "open_seats"
         time_slots = [time_slots; classes];
         open_seats = [open_seats; seats];
-    end
+    end % end find time conflicts
+    
+    % Clear the first row (consists only of empty strings)
     time_slots(1,:) = [];
     open_seats(1,:) = [];
 
 
-end
+end % end function
