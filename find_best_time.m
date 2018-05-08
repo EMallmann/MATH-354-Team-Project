@@ -8,9 +8,10 @@
 function time_slot = find_best_time(isM, isT,isW,isR,isF,times,name_of_class) 
     
      majors = courses_for_majors();
-     %majors = majors(218:219, :); 
      load('CCC_organized.mat', 'common_courses');
      majors_required_classes = common_courses;
+     % Uncomment the next two lines to perform test case
+     %majors = majors(218:219, :);
      %majors_required_classes = majors_required_classes(218:219,: );
      
      
