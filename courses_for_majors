@@ -16,12 +16,12 @@ uniqueplans = unique(text);
 
 
 
-% % display(uniqueplans);
+
 % %length(uniqueplans)
 % isFirst = true;
 % class_index = zeros(1,220);
 % length(class_index);
-% %display(class_index)
+
 % index = 1;
 % for ii = 1:length(text)-1
 %     isFirst = true;
@@ -37,7 +37,6 @@ uniqueplans = unique(text);
 %     end
 % end
 % class_index(length(uniqueplans)) = length(text) + 1;
-% %display(class_index);
 % 
 % rows_of_file = strings(1,220); %220 is length of uniqueplans
 % rows_of_file(1) = 'K2:K37'; %needs to be hard coded
@@ -65,7 +64,5 @@ uniqueplans = unique(text);
 % %         common_courses(kk,jj) = text(jj);
 % %     end
 % end
-% %display(rows_of_file);
-% 
 % save('CCC_organized.mat', 'common_courses');
 end
