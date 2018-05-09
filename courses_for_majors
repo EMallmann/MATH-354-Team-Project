@@ -1,27 +1,43 @@
 function uniqueplans = courses_for_majors()
-% rows = ["K2:K37", "K38:K46"];
+
+[num,text] = xlsread('CCC.xlsx', "B2:B32661"); %read all of the plans into a vector
+text = string(text); %turn them into strings
+uniqueplans = unique(text); %find unique plans
+
+%the commented out code below was used to create the mat files for the
+%CCC and majors matrices. They have a run time of 5 minutes, and the
+%matrices are the exact same every time the program runs, so we save and load the
+%files in order to save time.  
 
 
 
-[num,text] = xlsread('CCC.xlsx', "B2:B32661");
-text = string(text);
-uniqueplans = unique(text);
+ %Create a vector histogram of the each major, divide by 15 (3 yrs, 5
+ %courses per student, round to next heighest number
+%  [uniqueText, ~, J] = unique(text); 
+%  major_counts = histc(J, 1:numel(unique(text)));
+%  major_counts = major_counts./15;
+%  major_counts = ceil(major_counts);
+%  
+%  save('majors.mat', 'major_counts');
+ 
 
 
-% The code below is used to create the matrix of commonly taken courses for each major.
-% It has a 5 minute run-time, and creates the same matrix every time, so we saved the matrix
-% in a .mat file and commented out the code used to create it.
 
 
 
 
 
 
-% %length(uniqueplans)
+
+
+
+
+%Goes through the B column of CCC.xlsx and stores the starting and ending
+%cells of each major
 % isFirst = true;
 % class_index = zeros(1,220);
 % length(class_index);
-
+% 
 % index = 1;
 % for ii = 1:length(text)-1
 %     isFirst = true;
@@ -38,6 +54,8 @@ uniqueplans = unique(text);
 % end
 % class_index(length(uniqueplans)) = length(text) + 1;
 % 
+% 
+%FINDS THE UNIQUE CLASSES OF EACH MAJOR
 % rows_of_file = strings(1,220); %220 is length of uniqueplans
 % rows_of_file(1) = 'K2:K37'; %needs to be hard coded
 % rows_of_file(220) = 'K32416:K32642';
@@ -64,5 +82,9 @@ uniqueplans = unique(text);
 % %         common_courses(kk,jj) = text(jj);
 % %     end
 % end
+% %display(rows_of_file);
+% 
 % save('CCC_organized.mat', 'common_courses');
 end
+
+
